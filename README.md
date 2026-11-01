@@ -1,119 +1,145 @@
 # CaseStudy_4_ShivamKumar_234
 
-# Sentiment Analysis on Amazon Product Reviews
+# E-Commerce Customer Segmentation
 
-## Case Study 3 – Machine Learning
+## Case Study 4 – Machine Learning
 
 ### 1. Project Overview
-This project focuses on sentiment analysis of Amazon product reviews using Natural Language Processing (NLP) and Deep Learning.
+This project focuses on segmenting e-commerce customers based on their purchasing behavior using unsupervised machine learning techniques.
 
-The objective is to classify customer reviews into three sentiment categories:
-- **Positive**
-- **Neutral**
-- **Negative**
-
-Two models will be explored and compared:
-1. **BERT (DistilBERT):** A pre-trained transformer model fine-tuned for sentiment classification.
-2. **LSTM:** A deep learning baseline for text classification.
+The project applies **K-Means** and **DBSCAN** clustering algorithms to an RFM (Recency, Frequency, Monetary) dataset to identify meaningful customer groups and derive actionable marketing personas.
 
 ### 2. Objectives
-- Perform text preprocessing on product reviews.
-- Fine-tune a pre-trained transformer model using Hugging Face.
-- Build an LSTM baseline model.
-- Compare both models using standard evaluation metrics.
-- Understand transfer learning efficiency and real-world deployment constraints.
+- Analyze customer purchasing behavior using RFM analysis.
+- Apply K-Means and DBSCAN clustering algorithms.
+- Reduce dimensionality using PCA.
+- Visualize customer segments using t-SNE.
+- Compare clustering performance.
+- Develop actionable marketing strategies for each customer segment.
 
 ### 3. Technologies Used
 - Python
 - Google Colab
-- PyTorch
-- Hugging Face Transformers
-- Hugging Face Datasets
 - Pandas and NumPy
 - Scikit-learn
 - Matplotlib
+- Seaborn
 
 ### 4. Dataset
-The project uses Amazon product reviews.
+The project uses an online retail transaction dataset containing customer purchase information.
 
-The initial prototype uses the Amazon Polarity dataset, which contains positive and negative sentiment labels.
+Possible dataset: **Online Retail Dataset (UCI Machine Learning Repository)**
 
-**Dataset limitation:** Amazon Polarity supports binary classification only. The final three-class experiment requires a dataset containing neutral sentiment labels or a documented rating-based labeling strategy.
+Typical features include:
+- Invoice Number
+- Stock Code
+- Description
+- Quantity
+- Invoice Date
+- Unit Price
+- Customer ID
+- Country
 
-For rating-based labeling:
-- 1–2 stars: Negative
-- 3 stars: Neutral
-- 4–5 stars: Positive
+Dataset source: https://archive.ics.uci.edu/dataset/352/online+retail
 
-These labels are derived from ratings and may not always reflect the actual sentiment expressed in the review.
+### 5. RFM Analysis
+Customer behavior will be represented using three metrics:
 
-### 5. Methodology
-1. Load and inspect the dataset.
-2. Clean and preprocess review text.
-3. Prepare training, validation, and test datasets.
-4. Tokenize text for model training.
-5. Fine-tune DistilBERT for sentiment classification.
-6. Train an LSTM baseline using the same data splits.
-7. Evaluate and compare both models.
-8. Discuss deployment considerations.
+- **Recency (R):** Number of days since the customer's most recent purchase. Lower values indicate more recent activity.
+- **Frequency (F):** Number of distinct purchase transactions made by the customer.
+- **Monetary (M):** Total customer spending.
 
-### 6. Model Evaluation
-The models will be evaluated using:
+These features will be calculated using a defined analysis date and cleaned transaction records.
 
-- Accuracy
-- Precision
-- Recall
-- Macro F1-score
-- Confusion Matrix
-- Training Time
-- Inference Latency
-- Model Size
+### 6. Methodology
+1. Load the online retail dataset.
+2. Clean missing values, cancellations, and invalid transactions.
+3. Calculate RFM metrics for each customer.
+4. Handle skewness and scale the RFM features.
+5. Apply K-Means clustering.
+6. Select a suitable number of clusters using the Elbow Method and Silhouette Score.
+7. Apply DBSCAN clustering and tune its parameters.
+8. Apply PCA for dimensionality reduction and visualization.
+9. Use t-SNE to visualize customer segments.
+10. Interpret cluster profiles and develop marketing personas.
 
-Results will be added after completing the experiments.
+### 7. Algorithms Used
 
-| Metric | DistilBERT | LSTM |
-|---|---|---|
-| Accuracy | Pending | Pending |
-| Macro F1-score | Pending | Pending |
-| Training Time | Pending | Pending |
-| Inference Latency | Pending | Pending |
-| Model Size | Pending | Pending |
+**K-Means**
+- Groups customers into a predefined number of clusters.
+- Suitable for discovering broad customer segments.
+- Requires choosing the number of clusters.
 
-### 7. Transfer Learning Efficiency
-DistilBERT uses knowledge learned during pre-training, which can reduce task-specific training requirements compared with training a transformer from scratch.
+**DBSCAN**
+- Groups customers based on density.
+- Can identify irregularly shaped clusters and outliers.
+- May classify some customers as noise.
+- Its results depend on feature scaling and parameter selection.
 
-The project will examine:
-- Training time and computational requirements.
-- Performance with limited training data.
-- Model size and inference efficiency.
+### 8. Dimensionality Reduction
+- **PCA:** Used to reduce feature dimensions and inspect customer structure while retaining as much variance as possible.
+- **t-SNE:** Used to visualize customer segments in two dimensions.
 
-### 8. Real-World Deployment Constraints
-Potential challenges include:
-- GPU and computational costs.
-- Prediction latency and throughput.
-- Memory requirements.
-- Privacy of customer reviews.
-- Sarcasm, ambiguous sentiment, and multilingual text.
-- Class imbalance and domain shifts.
-- Model monitoring and periodic retraining.
+Note: PCA and t-SNE visualizations are exploratory. t-SNE distances and cluster appearances should not be treated as definitive evidence of cluster quality.
 
-### 9. Project Status
-**Status:** In Progress
+### 9. Evaluation Metrics
+The clustering approaches will be evaluated using:
 
-The initial dataset exploration and model setup have been started. Final three-class training, LSTM comparison, and evaluation are pending.
+- Silhouette Score
+- Davies-Bouldin Index
+- Number of clusters
+- Noise/outlier percentage for DBSCAN
+- Cluster sizes
+- RFM cluster profiles
+- Business interpretability
 
-### 10. Repository Structure
+Silhouette scores will be calculated only where meaningful, with appropriate handling of noise and degenerate clustering results.
+
+### 10. Customer Personas and Marketing Strategies
+Potential personas will be derived from actual cluster characteristics.
+
+| Potential Persona | Possible Marketing Strategy |
+|---|---|
+| Recent High-Value Customers | VIP rewards and loyalty benefits |
+| Loyal Frequent Buyers | Membership programs and personalized offers |
+| At-Risk Customers | Win-back campaigns |
+| New or Infrequent Customers | Welcome offers and onboarding |
+| Low-Engagement Customers | Relevant product recommendations |
+
+These are illustrative personas. Actual segment names and recommendations will be based on the observed RFM profiles.
+
+### 11. Expected Deliverables
+- Cleaned dataset or reproducible preprocessing pipeline.
+- RFM analysis.
+- K-Means clustering results.
+- DBSCAN clustering results.
+- PCA visualization.
+- t-SNE visualization.
+- Cluster profile analysis.
+- Customer personas and marketing recommendations.
+- Comparison report.
+
+### 12. Project Structure
 ```text
-Case-Study-3-Sentiment-Analysis/
-├── sentiment_analysis.ipynb
+Case-Study-4-Customer-Segmentation/
+├── customer_segmentation.ipynb
 ├── results/
-│   └── comparison.csv
+│   ├── rfm_summary.csv
+│   ├── cluster_profiles.csv
+│   └── visualizations/
 ├── README.md
 └── requirements.txt
 ```
 
-### 11. Conclusion
-This project aims to compare transformer-based transfer learning with an LSTM baseline for sentiment analysis of Amazon product reviews. The final findings will be based on experimental results and measured computational performance.
+### 13. Project Status
+**Status:** Planned / In Progress
 
-### 12. Author
+Dataset preparation, clustering, evaluation, visualization, and persona interpretation will be completed as part of the project.
+
+### 14. Conclusion
+This project aims to identify meaningful customer segments using RFM analysis and unsupervised learning. The resulting insights can help businesses improve customer retention, personalize marketing campaigns, and allocate marketing resources more effectively.
+
+Final conclusions will be based on experimental results.
+
+### 15. Author
 **Student Project – Machine Learning Case Study**
